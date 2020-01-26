@@ -1,0 +1,15 @@
+# This script will sit on the host you want to deploy the site too.
+# This should live wherever the home directory is
+
+AES_PASS=$1
+
+cd ~
+rm -rf BaseNodeApiProject
+git clone https://github.com/RyanMKrol/BaseNodeApiProject.git
+cd BaseNodeApiProject
+git pull
+npm install
+npm run build
+pm2 delete BaseNodeApiProject
+pm2 start build/bin/www.js --name BaseNodeApiProject
+pm2 save

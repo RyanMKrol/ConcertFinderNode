@@ -1,0 +1,9 @@
+# This script is used by travis to deploy our api to an ec2 host.
+
+AES_PASS=$1
+
+openssl aes-256-cbc -d -a -in credentials/awsKeypair.pem.enc -out credentials/awsKeypair.pem -k $AES_PASS
+
+chmod 400 credentials/awsKeypair.pem
+
+ssh -o "StrictHostKeyChecking no" -i credentials/awsKeypair.pem  ec2-user@3.136.241.151 "bash ~/deploy_base_api_api $AES_PASS"
