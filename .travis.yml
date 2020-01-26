@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - 13.3.0
+script: echo "Testing temporarily disabled"
+deploy:
+  provider: script
+  script: bash scripts/deploy $AES_PASS
+  on:
+    branch: master
+branches:
+  only:
+  - master
+  - development
