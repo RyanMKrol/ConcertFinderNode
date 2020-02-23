@@ -6,4 +6,4 @@ openssl aes-256-cbc -d -a -in credentials/awsKeypair.pem.enc -out credentials/aw
 
 chmod 400 credentials/awsKeypair.pem
 
-ssh -o "StrictHostKeyChecking no" -i credentials/awsKeypair.pem  ec2-user@3.136.241.151 "bash ~/deploy_base_api_api $AES_PASS"
+ssh -o "StrictHostKeyChecking no" -i credentials/awsKeypair.pem  ec2-user@3.136.241.151 "bash -s" < scripts/host_deploy

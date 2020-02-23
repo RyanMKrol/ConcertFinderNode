@@ -1,8 +1,3 @@
-# This script will sit on the host you want to deploy the site too.
-# This should live wherever the home directory is
-
-AES_PASS=$1
-
 cd ~
 rm -rf BaseNodeApiProject
 git clone https://github.com/RyanMKrol/BaseNodeApiProject.git
