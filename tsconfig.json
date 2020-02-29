@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "lib": ["es2015", "ES2017", "dom"],
+    "target": "es5",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "build",
@@ -12,5 +13,4 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
   },
-  "lib": ["es2015"]
 }
