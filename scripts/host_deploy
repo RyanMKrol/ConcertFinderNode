@@ -1,10 +1,10 @@
 cd ~
-rm -rf BaseNodeApiProject
-git clone https://github.com/RyanMKrol/BaseNodeApiProject.git
-cd BaseNodeApiProject
+rm -rf ConcertFinderNode
+git clone https://github.com/RyanMKrol/ConcertFinderNode.git
+cd ConcertFinderNode
 git pull
 npm install
 npm run build
-pm2 delete BaseNodeApiProject
-pm2 start build/bin/www.js --name BaseNodeApiProject
+pm2 delete ConcertFinderNode
+pm2 start build/bin/www.js --name ConcertFinderNode
 pm2 save
