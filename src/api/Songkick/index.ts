@@ -1,1 +1,1 @@
-export { fetchArtistId } from './Songkick'
+export { fetchArtistId } from './ArtistIDs'
