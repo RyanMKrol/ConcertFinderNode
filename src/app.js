@@ -1,37 +1,18 @@
 // app.js
-import express from 'express'
-import path from 'path'
-import cookieParser from 'cookie-parser'
-import logger from 'morgan'
-import createError from 'http-errors'
-import cors from "cors"
+import schedule from 'node-schedule'
+import MailSender from 'noodlesmail'
 
-import exampleRouter from './routes/example'
+import gmailCredentials from './../credentials/GmailCredentials.json'
 
-const app = express()
+const mailClient = new MailSender(gmailCredentials)
+mailClient.setFrom('"ConcertFinder" <ryankrol.m@gmail.com>')
+mailClient.setTo('ryankrol.m@gmail.com')
 
-app.use(cors())
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
-
-app.use('/example/endpoint', exampleRouter)
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404))
+schedule.scheduleJob('0 0 1 * * *', async () => {
+  try {
+    mailClient.sendMail('Weekly Conert Report!', 'Body')
+  } catch(error) {
+    console.log(error)
+    mailClient.sendMail('Failed to generate concert report', error.toString())
+  }
 })
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message
-  res.locals.error = req.app.get('env') === 'development' ? err : {}
-
-  // render the error page
-  res.status(err.status || 500)
-  res.send('500 - Internal Server Error')
-})
-
-export default app
