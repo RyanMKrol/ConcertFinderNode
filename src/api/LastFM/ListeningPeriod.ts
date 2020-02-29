@@ -1,4 +1,4 @@
-enum ListeningPeriod {
+export enum ListeningPeriod {
   ALL = 'overall',
   ONE_WEEK = '7day',
   ONE_MONTH = '1month',
@@ -6,5 +6,3 @@ enum ListeningPeriod {
   SIX_MONTH = '6month',
   ONE_YEAR = '12month',
 }
-
-export default ListeningPeriod
