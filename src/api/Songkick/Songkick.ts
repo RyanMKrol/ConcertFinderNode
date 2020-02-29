@@ -16,7 +16,7 @@ async function fetchArtistId(
     })
     .then((resJson: any) => {
       validateApiResponse(resJson)
-      return resJson.resultsPage.results.artist[0]
+      return resJson.resultsPage.results.artist[0].id
     })
     .catch((err: any) => {
       console.log('Caught an error trying to get the artist ID')
@@ -46,6 +46,7 @@ function validateApiResponse(response) {
     !response.resultsPage.results ||
     !response.resultsPage.results.artist ||
     response.resultsPage.results.artist.length === 0 ||
+    !response.resultsPage.results.artist[0].id ||
     response.resultsPage.status !== 'ok'
   ) {
     throw new Error('Could not validate the Songkick API response')
