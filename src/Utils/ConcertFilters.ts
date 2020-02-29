@@ -12,6 +12,12 @@ function filterLocation(locationData: LocationData, concerts: any[]) {
     .filter((concert) => cities.some((city) => concert.location.includes(city)))
 }
 
+function filterConcerts(concerts: any[]) {
+   return concerts
+    .filter((concert) => concert.type !== 'Festival')
+}
+
 export {
-  filterLocation
+  filterLocation,
+  filterConcerts,
 }

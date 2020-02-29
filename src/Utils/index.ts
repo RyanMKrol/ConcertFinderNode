@@ -1,1 +1,1 @@
-export { filterLocation } from './ConcertFilters'
+export { filterLocation, filterConcerts } from './ConcertFilters'
