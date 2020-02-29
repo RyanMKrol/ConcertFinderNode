@@ -7,6 +7,10 @@
     "sourceMap": true,
     "outDir": "build",
     "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
   },
   "lib": ["es2015"]
 }
