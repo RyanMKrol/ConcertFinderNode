@@ -3,10 +3,32 @@ import songkickCredentials from './../../../credentials/SongkickCredentials.json
 
 const BASE_URL = "https://api.songkick.com/api/3.0/artists/"
 const CONCERTS_PER_PAGE = 3
+const DEFAULT_DATA = 'N/a'
 
-async function fetchConcertsForArtistId(
+async function fetchConcertsForArtistId(artistID: string) {
+
+  const concertData = await fetchConcertDataForArtistId(artistID)
+  const customConcertData = concertData.map((concert) => {
+    const date = concert.start ? (concert.start.date || DEFAULT_DATA) : DEFAULT_DATA
+    const location = concert.location ? (concert.location.city || DEFAULT_DATA) : DEFAULT_DATA
+    const venue = concert.venue ? (concert.venue.displayName || DEFAULT_DATA) : DEFAULT_DATA
+
+    return {
+      name: concert.displayName,
+      type: concert.type,
+      uri: concert.uri,
+      date: date,
+      location: location,
+      venue: venue,
+    }
+  })
+
+  return customConcertData
+}
+
+async function fetchConcertDataForArtistId(
   artistID: string,
-  page: number = 1,
+  page = 1,
 ): Promise<any> {
   const url = buildApiUrl(artistID, page)
 
@@ -24,7 +46,7 @@ async function fetchConcertsForArtistId(
         const resultsAccountedFor = page * CONCERTS_PER_PAGE
 
         if (numResults > resultsAccountedFor) {
-          fetchConcertsForArtistId(artistID, page+1)
+          fetchConcertDataForArtistId(artistID, page+1)
             .then((newConcerts) => {
               resolve(concerts.concat(newConcerts))
             })
