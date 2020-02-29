@@ -90,7 +90,7 @@ function validateApiResponse(response) {
     !response.topartists.artist ||
     response.topartists.artist === 0
   ) {
-    throw new Error('Could not validate the Songkick API response')
+    throw new Error('Could not validate the LastFM API response')
   }
 }
 

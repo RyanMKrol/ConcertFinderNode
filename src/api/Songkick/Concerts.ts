@@ -38,7 +38,7 @@ async function fetchConcertDataForArtistId(
         return res.json()
       })
       .then((resJson: any) => {
-        validateApiResponse(resJson)
+        validateApiResponse(resJson, artistID)
 
         const concerts = resJson.resultsPage.results.event
 
@@ -76,7 +76,7 @@ function buildApiUrl(
   return url
 }
 
-function validateApiResponse(response) {
+function validateApiResponse(response: any, artistID: string) {
   if (
     !response ||
     !response.resultsPage ||
@@ -85,7 +85,7 @@ function validateApiResponse(response) {
     response.resultsPage.status !== 'ok' ||
     response.resultsPage.results.event === 0
   ) {
-    throw new Error('Could not validate the Songkick API response')
+    throw new Error(`Could not validate the Songkick API response fetching concerts, for artist: ${artistID}`)
   }
 }
 
