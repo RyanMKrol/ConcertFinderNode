@@ -1,0 +1,1 @@
+export { fetchArtists } from './LastFM'
