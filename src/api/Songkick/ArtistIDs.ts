@@ -5,7 +5,7 @@ const BASE_URL = "https://api.songkick.com/api/3.0/search/artists.json"
 
 type ArtistID = string
 
-async function fetchArtistId(
+async function fetchArtistID(
   artistName: string
 ): Promise<ArtistID> {
   const url = buildApiUrl(artistName)
@@ -34,7 +34,7 @@ function buildApiUrl(
 
   const url = `${BASE_URL}?apikey=${apiKey}&query=${uriArtistName}`
 
-  console.log(`Using Songkick URL: ${url}`)
+  console.log(`Using Songkick Artist IDs URL: ${url}`)
 
   return url
 }
@@ -54,5 +54,5 @@ function validateApiResponse(response) {
 }
 
 export {
-  fetchArtistId
+  fetchArtistID
 }
