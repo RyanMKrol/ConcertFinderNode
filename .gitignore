@@ -24,3 +24,5 @@ yarn-error.log*
 
 credentials/*
 !credentials/*.enc
+
+config.json
