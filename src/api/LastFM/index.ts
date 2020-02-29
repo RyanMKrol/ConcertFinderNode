@@ -1,2 +1,2 @@
-export { fetchArtistsForUser } from './LastFM'
+export { fetchArtistsForUser } from './Artists'
 export { ListeningPeriod } from './ListeningPeriod'

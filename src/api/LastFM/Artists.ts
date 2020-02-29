@@ -87,8 +87,8 @@ function validateApiResponse(response) {
   if (
     !response ||
     !response.topartists ||
-    !resJson.topartists.artist ||
-    resJson.topartists.artist === 0
+    !response.topartists.artist ||
+    response.topartists.artist === 0
   ) {
     throw new Error('Could not validate the Songkick API response')
   }
