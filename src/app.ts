@@ -12,7 +12,6 @@ import userConfig from './../config.json'
 
 const mailClient = new MailSender(gmailCredentials)
 mailClient.setFrom('"ConcertFinder" <ryankrol.m@gmail.com>')
-mailClient.setTo('ryankrol.m@gmail.com')
 
 schedule.scheduleJob('* * * * * 1', async () => {
   try {
@@ -33,10 +32,12 @@ schedule.scheduleJob('* * * * * 1', async () => {
 
       const filteredConcerts = filterConcerts(filterLocation(user.locationData, concerts))
 
+      mailClient.setTo(user.email)
       mailClient.sendMail('Weekly Conert Report!', JSON.stringify(filteredConcerts, null, 2))
     })
   } catch(error) {
     console.log(error)
+    mailClient.setTo('ryankrol.m@gmail.com')
     mailClient.sendMail('Failed to generate concert report', error.toString())
   }
 })
