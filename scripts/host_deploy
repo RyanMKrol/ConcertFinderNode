@@ -1,7 +1,13 @@
+AES_PASS=$1
+
 cd ~
 rm -rf ConcertFinderNode
 git clone https://github.com/RyanMKrol/ConcertFinderNode.git
 cd ConcertFinderNode
+openssl aes-256-cbc -d -a -in credentials/GmailCredentials.json.enc -out credentials/GmailCredentials.json -k $AES_PASS
+openssl aes-256-cbc -d -a -in credentials/LastFMCredentials.json.enc -out credentials/LastFMCredentials.json -k $AES_PASS
+openssl aes-256-cbc -d -a -in credentials/SongkickCredentials.json.enc -out credentials/SongkickCredentials.json -k $AES_PASS
+openssl aes-256-cbc -d -a -in config.json.enc -out config.json -k $AES_PASS
 git pull
 npm install
 npm run build
