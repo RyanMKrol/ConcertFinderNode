@@ -1,6 +1,6 @@
 // app.js
 import schedule from 'node-schedule'
-import MailSender from 'noodlesmail'
+import MailSender from 'noodlemail'
 import flatten from 'lodash.flatten'
 
 import { fetchArtistsForUser } from './api/LastFM'
