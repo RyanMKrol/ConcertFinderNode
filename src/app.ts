@@ -13,7 +13,11 @@ import userConfig from './../config.json'
 const mailClient = new MailSender(gmailCredentials)
 mailClient.setFrom('"ConcertFinder" <ryankrol.m@gmail.com>')
 
-schedule.scheduleJob('* * * * * 1', async () => {
+schedule.scheduleJob({
+  hour: 15,
+  minute: 0,
+  dayOfWeek: 1
+}, async () => {
   try {
     userConfig.forEach(async (user) => {
       const lastFmData = (await fetchArtistsForUser(user.username, user.listeningPeriodThresholds))
@@ -33,7 +37,7 @@ schedule.scheduleJob('* * * * * 1', async () => {
       const filteredConcerts = filterConcerts(filterLocation(user.locationData, concerts))
 
       mailClient.setTo(user.email)
-      mailClient.sendMail('Weekly Conert Report!', JSON.stringify(filteredConcerts, null, 2))
+      mailClient.sendMail('Weekly Concert Report!', JSON.stringify(filteredConcerts, null, 2))
     })
   } catch(error) {
     console.log(error)
