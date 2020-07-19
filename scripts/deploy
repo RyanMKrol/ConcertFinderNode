@@ -1,9 +1,7 @@
-# This script is used by travis to deploy our api to an ec2 host.
+# install the deployment tool
+npm install noodle-deploy;
 
-AES_PASS=$1
-
-openssl aes-256-cbc -d -a -in credentials/awsKeypair.pem.enc -out credentials/awsKeypair.pem -k $AES_PASS
-
-chmod 400 credentials/awsKeypair.pem
-
-ssh -o "StrictHostKeyChecking no" -i credentials/awsKeypair.pem  ec2-user@3.136.241.151 "bash -s" < scripts/host_deploy $AES_PASS
+# node is wrapped in which becuase sudo does not maintain the same path. As the user,
+# node exists, but as root, it doesn't:
+# https://askubuntu.com/questions/955434/sudo-node-command-not-found
+sudo "$(which node)" ./node_modules/noodle-deploy/build/index.js -s $AES_PASS -p ConcertFinderNode -t "build/src/app.js";
