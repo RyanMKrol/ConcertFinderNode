@@ -1,2 +1,2 @@
-export { fetchArtistsForUser } from './Artists'
+export { fetchArtistsForUser, ArtistData } from './Artists'
 export { ListeningPeriod } from './ListeningPeriod'
