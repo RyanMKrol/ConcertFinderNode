@@ -4,31 +4,35 @@ import flatten from 'lodash.flatten'
 import { ListeningPeriod } from './'
 import lastFmCredentials from './../../../credentials/LastFMCredentials.json'
 
-const BASE_URL = 'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&format=json'
+const BASE_URL =
+  'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&format=json'
 const RESULT_LIMIT = 350
 
-type ArtistData = {
-  artist: string,
-  plays: Number,
-  url: string,
-  period: ListeningPeriod,
-  threshold: Number,
+export type ArtistData = {
+  artist: string
+  plays: Number
+  url: string
+  period: ListeningPeriod
+  threshold: Number
 }
 
 // we can have multiple users defined in the config, so this function
 // fetches data on a per-user basis
 async function fetchArtistsForUser(
   username: string,
-  thresholds: object,
+  thresholds: object
 ): Promise<ArtistData[]> {
-  const lastFmRequests = Object.keys(thresholds).map((period: ListeningPeriod) => {
-    const threshold = thresholds[period]
-    return fetchArtistsForPeriod(period, username, threshold)
-  })
+  const lastFmRequests = Object.keys(thresholds).map(
+    (period: ListeningPeriod) => {
+      const threshold = thresholds[period]
+      return fetchArtistsForPeriod(period, username, threshold)
+    }
+  )
 
   // get a single list of valid artists, removing any undefined items
-  const lastFmData = flatten(await Promise.all(lastFmRequests))
-    .filter((item) => item)
+  const lastFmData = flatten(await Promise.all(lastFmRequests)).filter(
+    item => item
+  )
 
   return lastFmData
 }
@@ -38,7 +42,7 @@ async function fetchArtistsForUser(
 async function fetchArtistsForPeriod(
   listeningPeriod: ListeningPeriod,
   username: string,
-  threshold: Number,
+  threshold: Number
 ): Promise<ArtistData[]> {
   const url = buildApiUrl(listeningPeriod, username)
 
@@ -50,15 +54,17 @@ async function fetchArtistsForPeriod(
       validateApiResponse(resJson)
 
       const artistData: any = resJson.topartists.artist
-      const filteredArtists = artistData.filter((artist) => artist.playcount >= threshold)
+      const filteredArtists = artistData.filter(
+        artist => artist.playcount >= threshold
+      )
 
-      return filteredArtists.map((artist) => {
+      return filteredArtists.map(artist => {
         return {
           artist: artist.name,
           plays: artist.playcount,
           url: artist.url,
           period: listeningPeriod,
-          threshold: threshold,
+          threshold: threshold
         }
       })
     })
@@ -94,6 +100,4 @@ function validateApiResponse(response) {
   }
 }
 
-export {
-  fetchArtistsForUser
-}
+export { fetchArtistsForUser }
