@@ -1,2 +1,2 @@
 export { fetchArtistID } from './ArtistIDs'
-export { fetchConcertsForArtistId } from './Concerts'
+export { fetchConcertsForArtist, ConcertData } from './Concerts'

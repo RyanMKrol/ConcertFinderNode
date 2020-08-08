@@ -1,13 +1,11 @@
 import fetch from 'node-fetch'
 import songkickCredentials from './../../../credentials/SongkickCredentials.json'
 
-const BASE_URL = "https://api.songkick.com/api/3.0/search/artists.json"
+const BASE_URL = 'https://api.songkick.com/api/3.0/search/artists.json'
 
 type ArtistID = string
 
-async function fetchArtistID(
-  artistName: string
-): Promise<ArtistID> {
+async function fetchArtistID(artistName: string): Promise<ArtistID> {
   const url = buildApiUrl(artistName)
 
   return fetch(url)
@@ -26,9 +24,7 @@ async function fetchArtistID(
     })
 }
 
-function buildApiUrl(
-  artistName: string
-): string {
+function buildApiUrl(artistName: string): string {
   const apiKey = songkickCredentials.key
   const uriArtistName = encodeURI(artistName)
 
@@ -49,10 +45,10 @@ function validateApiResponse(response: any, artistName: string) {
     !response.resultsPage.results.artist[0].id ||
     response.resultsPage.status !== 'ok'
   ) {
-    throw new Error(`Could not validate the Songkick API response fetching artist IDs, for artist: ${artistName}`)
+    throw new Error(
+      `Could not validate the Songkick API response fetching artist IDs, for artist: ${artistName}`
+    )
   }
 }
 
-export {
-  fetchArtistID
-}
+export { fetchArtistID }
