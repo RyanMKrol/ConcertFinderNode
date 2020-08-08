@@ -25,7 +25,7 @@ async function fetchConcertsForArtist(
   artist: ArtistDataWithId
 ): Promise<ConcertData[]> {
   const concertData = await fetchConcertDataForArtistId(artist.artistId)
-  console.log(concertData)
+
   const customConcertData = concertData.map(concert => {
     const date = concert.start
       ? concert.start.date || DEFAULT_DATA

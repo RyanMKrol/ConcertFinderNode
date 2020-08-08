@@ -4,7 +4,6 @@ var MarkdownIt = require('markdown-it'),
 import { ConcertData } from './../api/Songkick'
 
 export default function buildReport(concertData: ConcertData[]): string {
-  console.log(concertData)
   sortConcerts(concertData)
 
   const reportContent = `${generateHeader()}` + `${generateBody(concertData)}`
