@@ -1,23 +1,50 @@
+import { ConcertData } from './../api/Songkick'
+
 type LocationData = {
-  cities: string[],
-  countries: string[],
+  include: {
+    cities: string[]
+    countries: string[]
+  }
+  exclude: {
+    cities: string[]
+    countries: string[]
+  }
 }
 
-function filterLocation(locationData: LocationData, concerts: any[]) {
-  const cities = locationData.cities
-  const countries = locationData.countries
+function filterLocation(
+  locationData: LocationData,
+  concerts: ConcertData[]
+): ConcertData[] {
+  const includeCountries = locationData.include.countries
+  const includeCities = locationData.include.cities
+  const excludeCountries = locationData.exclude.countries
+  const excludeCities = locationData.exclude.cities
 
-   return concerts
-    .filter((concert) => countries.some((country) => concert.location.includes(country)))
-    .filter((concert) => cities.some((city) => concert.location.includes(city)))
+  return concerts
+    .filter(concert =>
+      includeCountries.length > 0
+        ? includeCountries.some(country => concert.location.includes(country))
+        : true
+    )
+    .filter(concert =>
+      includeCities.length > 0
+        ? includeCities.some(city => concert.location.includes(city))
+        : true
+    )
+    .filter(concert =>
+      excludeCountries.length > 0
+        ? excludeCountries.some(country => !concert.location.includes(country))
+        : true
+    )
+    .filter(concert =>
+      excludeCities.length > 0
+        ? excludeCities.some(city => !concert.location.includes(city))
+        : true
+    )
 }
 
-function filterConcerts(concerts: any[]) {
-   return concerts
-    .filter((concert) => concert.type !== 'Festival')
+function filterConcerts(concerts: ConcertData[]) {
+  return concerts.filter(concert => concert.type !== 'Festival')
 }
 
-export {
-  filterLocation,
-  filterConcerts,
-}
+export { filterLocation, filterConcerts }
