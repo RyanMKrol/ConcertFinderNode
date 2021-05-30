@@ -1,13 +1,15 @@
+dist: bionic
 language: node_js
 node_js:
-  - 13.3.0
+  - 14.17.0
 script: echo "Testing temporarily disabled"
 deploy:
   provider: script
   script: bash scripts/deploy $AES_PASS
   on:
     branch: master
+  skip_cleanup: true
 branches:
   only:
-  - master
-  - development
+    - master
+    - development
